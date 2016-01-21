@@ -1,5 +1,6 @@
 import socket
 import re
+import sys
 from urlparse import urlparse
 
 # client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -41,15 +42,27 @@ def getResponse(client):
     # Return Final Response
     return resp
 
+# Return the Body of an HTTP Response
+def getBody(response):
+    body = re.search('\n\s*\n',response)
+    return response[body.end():]
+
 # Get return Status for return value
-def getStatusCode(response_string):
-    if re.search(r'HTTP/1\.1\s2\d\d\s.*',response_string):
-        return 0
-    elif re.search(r'HTTP/1\.1\s3\d\d\s.*',response_string):
-        return 3
-    elif re.search(r'HTTP/1\.1\s4\d\d\s.*',response_string):
-        return 4
-    elif re.search(r'HTTP/1\.1\s5\d\d\s.*',response_string):
-        return 5
+def getStatusCode(response):
+
+    status = re.search(r'HTTP/1\.1\s\d\d\d\s.*', response).string.split('\n')[0]
+
+    if re.search(r'HTTP/1\.1\s2\d\d\s.*', status):
+        return getBody(response)
+    elif re.search(r'HTTP/1\.1\s3\d\d\s.*', status):
+        print("Recieved status code " + status[9:-1].rstrip() +" exiting")
+        sys.exit(3)
+    elif re.search(r'HTTP/1\.1\s4\d\d\s.*', status):
+        print("Recieved status code " + status[9:-1].rstrip() + " exiting")
+        sys.exit(4)
+    elif re.search(r'HTTP/1\.1\s5\d\d\s.*', status):
+        print("Recieved status code " + status[9:-1].rstrip() + " exiting")
+        sys.exit(5)
     else:
-        return 1
+        print("Recieved status code " + status[9:-1].rstrip() + " exiting")
+        sys.exit(1)

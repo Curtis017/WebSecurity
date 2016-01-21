@@ -2,7 +2,7 @@
 import sys
 import re
 import socket
-from functions import getResponse, sendMessage, getStatusCode
+from functions import getResponse, sendMessage, getStatusCode, getBody
 
 # Set Variables
 METHOD = str(sys.argv[1])
@@ -15,8 +15,8 @@ sendMessage(METHOD, URL, CLIENT)
 response = getResponse(CLIENT)
 CLIENT.close()
 
-# If Redirected
-while re.search(r'HTTP/1\.1\s3\d\d\s.*',response) and REDIRECT_COUNT < 5:
+# If Redirected (301,302,303,307)
+while re.search(r'^HTTP\/1\.1\s3\d[1-3]\s.*|HTTP\/1\.1\s3\d[7]\s.*',response) and REDIRECT_COUNT < 5 and METHOD != "HEAD":
     print("REDIRECTED")
     REDIRECT_COUNT += 1
 
@@ -31,7 +31,7 @@ while re.search(r'HTTP/1\.1\s3\d\d\s.*',response) and REDIRECT_COUNT < 5:
     CLIENT.close()
 
 # Print Final Response
-print(response)
-sys.exit(getStatusCode(response))
+getStatusCode(response)
+print(getBody(response))
 
 # https://docs.python.org/2/library/httplib.html

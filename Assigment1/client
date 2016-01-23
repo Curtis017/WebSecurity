@@ -22,7 +22,6 @@ CLIENT.close()
 
 # If Redirected (301,302,303,307)
 while re.search(r'^HTTP\/1\.1\s3\d[1-3]\s.*|HTTP\/1\.1\s3\d[7]\s.*',response) and REDIRECT_COUNT < 5 and METHOD != "HEAD":
-    print("REDIRECTED")
     REDIRECT_COUNT += 1
 
     # Get New Location
@@ -37,7 +36,6 @@ while re.search(r'^HTTP\/1\.1\s3\d[1-3]\s.*|HTTP\/1\.1\s3\d[7]\s.*',response) an
 
 # Print Final Response
 getStatusCode(response)
-print(getBody(response))
+sys.stdout.write(getBody(response).rstrip())
 
-# PUT and POST extra information is that a 3rd argument
 # Example Redirect Pages (https://www.hgtv.com/sweepstakes)

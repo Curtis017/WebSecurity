@@ -1,0 +1,22 @@
+Author: James Curtis Hughes
+Date: 01/22/16
+This program implements the very basic components of an HTTP 1.1 client.
+It takes two command line arguments one for the method and one for the
+page url which must begin with "http://" or "https://".
+
+Example Usage:
+"python client.py GET http://www.google.com"
+
+Implementation includes all methods available in HTTP 1.1. However, based
+on the assignment writeup, only the basic operations are fully supported.
+(i.e. no additional headers or body information can be included within the HTTP request)
+Therefore methods such as POST and PUT are fairly useless. The client also supports
+chunked data responses.  
+
+If the status of the response is in the 2XX level then the output of the program
+is the body of the HTTP response and will exit in a return value of 0. Responses in
+the 3XX level will be redirected up to five times before the program will exit in a
+return value of '3'.  Other exit return values include:
+    4 - 4XX level response
+    5 - 5XX level response
+    1 - All other response levels

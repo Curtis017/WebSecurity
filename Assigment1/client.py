@@ -4,6 +4,11 @@ import re
 import socket
 from functions import getResponse, sendMessage, getStatusCode, getBody
 
+# Check Command Line Arguments
+if len(sys.argv) < 3:
+    print("Please Provide command line arguments in the form 'python ./client <METHOD> <URL>'")
+    sys.exit(1)
+
 # Set Variables
 METHOD = str(sys.argv[1])
 URL    = sys.argv[2]
@@ -34,4 +39,5 @@ while re.search(r'^HTTP\/1\.1\s3\d[1-3]\s.*|HTTP\/1\.1\s3\d[7]\s.*',response) an
 getStatusCode(response)
 print(getBody(response))
 
-# https://docs.python.org/2/library/httplib.html
+# PUT and POST extra information is that a 3rd argument
+# Example Redirect Pages (https://www.hgtv.com/sweepstakes)

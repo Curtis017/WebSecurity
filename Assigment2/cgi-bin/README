@@ -1,0 +1,22 @@
+Author: James Curtis Hughes
+UT ID: 000332122
+UT NETID: jhughe39
+Date: 01/22/16
+
+As requested in email the executable name is in the format "net-id_hw2.cgi"
+
+This program is a web application that will return two web pages:
+  1. cgi-bin/jhughe39_hw2/calculator
+  2. cgi-bin/jhughe39_hw2/guestbook
+
+Calculator - will take two floating point numbers and an operator and return
+the calculated value of the two numbers based on the provided operator.
+
+Guestbook - will keep a list of guest that have been added to the server.  The
+list is stored in a file on the server side.
+
+Makefile - will change the permissions on the jhughe39_hw2.cgi executable and remove any file
+named guestbook from the parent directory and replace it with a new file named
+guestbook.
+
+**** Program must be ran inside of a cgi enabled server running from the cgi-bin directory ****
